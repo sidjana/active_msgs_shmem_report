@@ -1,0 +1,143 @@
+\documentclass{llncs}
+
+% to replace numbering footnotes with the use of symbols
+%\usepackage[symbol]{footmisc}
+\usepackage{ifpdf}
+\usepackage{cite}
+
+\usepackage[pdftex]{graphicx}
+
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\usepackage[cmex10]{amsmath}
+
+
+\usepackage{algorithmic}
+
+% *** ALIGNMENT PACKAGES ***
+\usepackage{array}
+\usepackage[font={footnotesize}]{caption}
+\usepackage{subcaption}
+\usepackage{mdwmath}
+\usepackage{mdwtab}
+
+%\usepackage[tight,footnotesize]{subfigure}
+\usepackage{booktabs}
+\usepackage{fixltx2e}
+
+\usepackage{url}
+
+\hyphenation{ RTS CTS OpenSHMEM Shar-ed Memo-ry Pass-ing  Mess-age Be-sides bench-markmicro-benchmark uni-versity}
+
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{color}
+\usepackage[hidelinks]{hyperref}
+\usepackage{stfloats} %permits stretching and shrinking images
+\usepackage{listings}
+\usepackage{afterpage}
+
+\usepackage{framed}  %package for framing images
+\usepackage{lscape}
+%\usepackage{flushend}
+
+\lstset{ 
+  language=C,           % the language of the code
+  basicstyle=\tiny,       % the size of the fonts that are used for the code
+%  numbers=left,                   % where to put the line-numbers
+%  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+                                    % will be numbered 
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=1,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+%  keywordstyle=\color{blue},          % keyword style
+%  commentstyle=\color{dkgreen},       % comment style
+% stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+%  xleftmargin=5pt,
+  morekeywords={*,...}              % if you want to add more keywords to the set
+}
+
+
+
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+%\linespread{1}
+
+% DONOT Use with LNCS: [reduce space between
+% paragraphs]
+%\usepackage[compact]{titlesec}
+%\titlespacing{\section}{0pt}{*0}{*0}
+%\titlespacing{\subsection}{0pt}{*0}{*0}
+%\titlespacing{\subsubsection}{0pt}{*0}{*0}
+
+
+
+\begin{document}
+
+\title{Impact of Design of Communication Protocols and
+Choice of Transport Layer on the Power and Energy
+Consumption of Distributed Programming Models}
+
+\author{ Siddhartha Jana\inst{1} \and  Oscar Hernandez\inst{2}  \and Stephen Poole\inst{2} \and Barbara Chapman\inst{1}}
+\institute{ 
+Computer Science department,\\ University of Houston,\\ Houston, Texas\\
+\email{{sidjana,chapman}@cs.uh.edu}
+\and
+Computer Science and Mathematics Division\\
+Oak Ridge National Laboratory,\\
+Oak Ridge, Tennessee\\
+\email{{oscar,spoole}@ornl.gov}
+}
+
+\date{6th February, 2014}
+\maketitle
+
+\begin{abstract}
+
+    The amount of energy consumed due to data movement
+    poses a serious threat to the usability of
+    distributed programming models on future systems.
+    Message-passing models like MPI provide the user
+    with explicit interfaces to initiate data-transfers
+    among remote processes.  In this work, we establish
+    the notion that from a programmer's standpoint, the
+    controllable factors like the size of the
+    data-payload to be transferred and the number of
+    explicit MPI calls to service such transfers have a
+    direct impact on the pattern of the
+    power-signatures of communication kernels.  On a
+    closer look, we further observe that the choice of
+    the transport layer (along with the associated
+    interconnect) and the design of the communication
+    protocol to implement these transfer-routines are
+    responsible for this pattern.  This paper discusses
+    these initial initial attempts in performing a
+    fine-grained study on the impact of the power and
+    energy consumption due to data movement in
+    distributed programming models.  We hope that
+    results discussed in this work would motivate the
+    design of ``power-aware" middleware for use with
+    HPC applications.
+
+\end{abstract}
+
+\end{document}
+

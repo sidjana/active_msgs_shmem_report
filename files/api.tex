@@ -1,0 +1,154 @@
+
+\subsection{Registraction of Active Message Handlers}
+\subsubsection{shmemx\_am\_attach}
+Enables the calling PE to register a handler with 
+the OpenSHMEM implementation. This is a collective 
+operation. The prototype of the handler differs 
+slightly based on the type of communication model 
+being used.\\
+
+\fbox{\begin{minipage}{28em}
+\textit{void shmemx\_am\_attach (int handler\_id, 
+shmemx\_am\_handler function\_handler)}
+\end{minipage}}
+
+\begin{itemize}
+    \item \textit{handler\_id} The integer Id used 
+        to identify an AM handler
+    \item \textit{function\_handler} A pointer to 
+        the function that holds the body of the 
+        AM handler. The signature of 
+        the function handler is:
+        \begin{itemize}
+            \item For 1-sided Active 
+                Messages:\\\textit{void 
+                function\_name (void *buf, size\_t 
+            nbytes, int req\_pe)}
+            \item For 2-sided Active 
+                Messages:\\\textit{void 
+                function\_name (void *buf, size\_t nbytes, int req\_pe, shmemx\_am\_token\_t token)}
+            \item Where,
+                \begin{itemize}
+                    \item \textit{*buf} The 
+                        pointer to the user buffer 
+                        being transferred to the 
+                        remote PE 
+                        \textit{req\_pe}.
+                    \item \textit{nbytes} Size of 
+                        the user buffer 
+                        \textit{buf}
+                    \item \textit{req\_pe} Id of 
+                        the remote PE that will 
+                        execute the handler 
+                \end{itemize}
+       \end{itemize}
+\end{itemize}
+
+\subsubsection{shmemx\_am\_detach}
+A call to this function removes the mapping 
+between the handler id and the function. This is a 
+collective operation. Once detached, it is illegal 
+for a PE to initiate an active message with the 
+same function handler id unless it explicitly maps 
+the id again using shmemx\_am\_attach.\\
+
+\fbox{\begin{minipage}{28em}
+\textit{void shmemx\_am\_detach (int 
+handler\_id);}
+\end{minipage}}
+
+\begin{itemize}
+    \item \textit{handler\_id} This is the handler 
+        id of the function that needs to be 
+        deregistered with the underlying 
+        implementation.
+\end{itemize}
+
+
+\subsection{Initiating Active Messages}
+
+\subsubsection{shmemx\_am\_launch}
+This function is used to launch an active message
+on a remote PE. There is no guarantee of 
+completion of execution of the handler on function 
+return. The source buffer can be reused on 
+return.\\
+
+\fbox{\begin{minipage}{28em}
+void shmemx\_am\_launch (int dest, int handler\_id, void* source\_addr, size\_t nbytes)
+\end{minipage}}
+
+
+ \begin{itemize}
+     \item \textit{dest} Id of the remote PE that 
+         will execute the AM handler
+     \item \textit{handler\_id} Id of the handler 
+         that is executed at the remote PE.
+     \item \textit{source\_addr} Start address of 
+         the user buffer that is passed to the 
+         AM handler
+     \item \textit{nbytes} Size of the user buffer 
+         \textit{source\_addr}
+ \end{itemize}
+
+\subsubsection{shmemx\_am\_request}
+In a two-sided request-reply communication model, 
+this function is used to launch a request AM handler on 
+the remote PE. Typically, the request handler in 
+turn initiates a reply AM handler on 
+the current PE.\\
+  
+\fbox{\begin{minipage}{28em}
+void shmemx\_am\_request(int dest, int handler\_id, void* source\_addr, size\_t nbytes)
+\end{minipage}}
+
+
+ \begin{itemize}
+     \item \textit{dest} Id of the remote PE that 
+         will execute the AM handler
+     \item \textit{handler\_id} Id of the handler 
+         that is executed at the remote PE.
+     \item \textit{source\_addr} Start address of 
+         the user buffer that is passed to the 
+         AM handler
+     \item \textit{nbytes} Size of the user buffer 
+         \textit{source\_addr}
+ \end{itemize}
+
+\subsubsection{shmemx\_am\_reply}
+
+        In a two-sided request-reply communication 
+        model, this function is used by the 
+        request
+        AM handler to launch a reply AM handler at 
+        the remote PE that had originally 
+        initiated the executing handler on 
+        the current PE.\\
+
+\fbox{\begin{minipage}{28em}
+void shmemx\_am\_reply(int handler\_id, void* source\_addr, size\_t nbytes, shmemx\_am\_token\_t temp\_token)
+\end{minipage}}
+
+\begin{itemize}
+    \item \textit{handler\_id} Id of the handler 
+        that is executed at the remote PE.
+    \item \textit{source\_addr} Start address of 
+        the user buffer that is passed to the AM 
+        handler
+    \item \textit{nbytes} Size of the user buffer 
+        \textit{source\_addr}
+\item {temp\_token} This is the token passed to 
+     the executing request handler. This token is 
+     passed as is to the reply handler.
+\end{itemize}
+
+\subsection{Completion of Active Messages}
+
+\subsubsection{shmemx\_am\_quiet}
+This function waits till the completion of all 
+active messages initiated by the current PE.\\
+
+\fbox{\begin{minipage}{12em}
+void shmemx\_am\_quiet()
+\end{minipage}}
+

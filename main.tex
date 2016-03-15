@@ -1,0 +1,187 @@
+\documentclass{llncs}
+
+% to replace numbering footnotes with the use of symbols
+%\usepackage[symbol]{footmisc}
+\usepackage{ifpdf}
+\usepackage{cite}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{sidecap}
+
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\usepackage[cmex10]{amsmath}
+\DeclareMathSizes{10}{10}{8.5}{5}
+
+\usepackage{algorithmic}
+
+% *** ALIGNMENT PACKAGES ***
+\usepackage{array}
+\usepackage[font={footnotesize}]{caption}
+\usepackage{subcaption}
+\usepackage{mdwmath}
+\usepackage{mdwtab}
+
+%\usepackage[tight,footnotesize]{subfigure}
+\usepackage{booktabs}
+\usepackage{fixltx2e}
+
+\usepackage{url}
+
+\hyphenation{OpenSHMEM PGAS programm-ing}
+
+\usepackage{threeparttable}
+\usepackage{tabularx}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{color}
+\usepackage[hidelinks]{hyperref}
+\usepackage{stfloats} %permits stretching and shrinking images
+\usepackage{listings}
+\usepackage{afterpage}
+
+\usepackage{framed}  %package for framing images
+\usepackage{lscape}
+%\usepackage{flushend}
+
+\lstset{ 
+  language=C,           % the language of the code
+  basicstyle=\tiny,       % the size of the fonts that are used for the code
+%  numbers=left,                   % where to put the line-numbers
+%  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line 
+                                    % will be numbered 
+  backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=1,                      % sets default tabsize to 2 spaces
+  captionpos=b,                   % sets the caption-position to bottom
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=true,        % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                 % show the filename of files included with \lstinputlisting;
+                                  % also try caption instead of title
+%  keywordstyle=\color{blue},          % keyword style
+%  commentstyle=\color{dkgreen},       % comment style
+% stringstyle=\color{mauve},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+%  xleftmargin=5pt,
+  morekeywords={*,...}              % if you want to add more keywords to the set
+}
+
+\usepackage{wrapfig,booktabs}
+
+
+\newcommand{\myfigureshrinker}{\vspace{-1cm}}
+%\usepackage[font={small}]{caption, subfig}
+\setlength{\abovecaptionskip}{1ex}
+\setlength{\belowcaptionskip}{1ex}
+\setlength{\floatsep}{1ex}
+\setlength{\textfloatsep}{1ex}
+
+%\usepackage[sort&compress]{natbib}    
+\newcommand{\bibfont}{\small}
+%\setlength{\bibsep}{0ex}
+
+
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\linespread{0.95}
+
+
+% DONOT Use with LNCS: [reduce space between
+% paragraphs]
+%\usepackage[compact]{titlesec}
+%\titlespacing{\section}{0pt}{*0}{*0}
+%\titlespacing{\subsection}{0pt}{*0}{*0}
+%\titlespacing{\subsubsection}{0pt}{*0}{*0}
+
+\makeatletter
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                       {-8\p@ \@plus -4\p@ \@minus -4\p@}% Formerly -18\p@ \@plus -4\p@ \@minus -4\p@
+                       {-0.5em \@plus -0.22em \@minus -0.1em}%
+                       {\normalfont\normalsize\bfseries\boldmath}}
+\makeatother
+
+
+
+\begin{document}
+
+\title{Active Messages for OpenSHMEM}
+
+\author{Siddhartha Jana}
+\institute{ 
+Department of Computer Science,\\ University of Houston,\\ Houston, Texas\\
+\email{sidjana@cs.uh.edu}
+}
+
+\date{14th March, 2016}
+\maketitle
+
+\begin{abstract}
+    \label{sec:abstract}
+    \input{files/abstract}
+\end{abstract}
+
+% Write about GASNet and MPI proposals. Also write 
+% about past Active Message work from the 1994 
+% paper
+\section{Introduction and Related Work}
+\label{sec:intro}
+\input{files/intro}
+
+% write about different terms like endpoint - 
+% refer gasnet spec
+\section{Terminology}
+\label{sec:terminology}
+
+% write the description of the new function 
+% interfaces being proposed
+\section{Proposed API} 
+\label{sec:api}
+\input{files/api}
+
+% write about impact of synchronization, etc and 
+% its impact on active msgs
+\section{Impact on existing OpenSHMEM 
+implementation}
+\label{sec:impact}
+
+% write about further proposals (not in 
+% implementation) viz. active message broadcast, 
+% active sets
+\section{Possible Extensions}
+\label{sec:extensions}
+
+% Point to the location of the github repo
+\section{Microbenchmarks}
+\label{sec:microbench}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+\section{Acknowledgments}
+The author is to be solely blamed for this report. 
+This report is not exhaustive and does NOT take 
+into account the challenges that arise in 
+introducing the concept of Active Messages in all 
+architectures that support OpenSHMEM. There are 
+some important lessons to be learned from the 
+GASNet community.
+
+% This work is supported by the joint collaboration 
+% between the Las Alamos National Laboratory and the 
+% University of Houston.
+
+\bibliographystyle{splncs03}
+\bibliography{files/references}
+
+\end{document}
+
