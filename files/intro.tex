@@ -1,8 +1,55 @@
 
 There exists multiple communication libraries that 
-support active messages. Examples include GASNet, 
-IBM's LAPI and DCMF, Myrinet's MX, POOMA/CHEETAH 
-as well as application layers like PBGL. There 
-have also been proposals of introducing this 
-concept into MPI. 
+support active messages. Examples include 
+GASNet\cite{gasnet} 
+and IBM's LAPI\cite{lapi} and PAMI\cite{pami}. These interfaces provided 
+by these libraries are very low level and makes in 
+challenging to be incorporated in HPC 
+applications.
+
+
+\subsection{Active Messages in MPI}
+
+\subsubsection{Implementations}
+There have been multiple different approaches of 
+adding active messaging support to MPI. These 
+implementations have either been built directly on 
+top of MPI or as additional service threads that 
+run in parallel to the actual MPI processes. 
+Examples of the former include 
+AM++\cite{willcock2010amplus} and 
+AMMPI\cite{bonacheaammpi}. 
+Recent work by Zhao et al. describes an approach 
+of using an additional internal thread to support 
+asynchonous progress of active messages within 
+MPICH\cite{zhao2013toward}. This implementation is 
+integrated to the progress engine that supports 
+one-sided communication in MPICH.
+
+\subsubsection{Proposed Interface}
+MPI already has an \textit{Accumulate} function 
+that allows users to execute pre-defined 
+computations on a remote MPI rank. Zhao et al.  
+extend this function to allow remote execution of 
+user-defined functions. The user-defined function 
+accepts pointers to the input and output buffers.  
+When called, the function can obtain the input 
+data from the input buffer and is responsible for 
+writing the result of the computation back to the 
+output buffer. The active message interfaces also 
+contain specific interfaces to initiate an a 
+message (am\_send), \textit{collectively} register 
+and deregister user defined function calls. An 
+alternative function model that has been proposed 
+is to allow registration of a single user-defined 
+function. This function - called the head handler 
+- acts as a gateway to all other local functions.  
+The rationale behind this is to enable this single 
+"middle-man" function on the remote process to 
+efficiently handle incoming data buffers of 
+multiple data types and stride counts. Some of the 
+additional design considerations for active 
+messages in MPI have been discussed by Hoefler et 
+al.\cite{hoefler2009active}.
+
 
